@@ -989,15 +989,12 @@ int main() {
 }
 ```
 
-This code defines a `Polynomial` class that uses a doubly linked list to represent and work with polynomial expressions.
-
 ---
 
 ## Stack
 
 Certainly! Below is a Markdown document explaining the principles, abstract data type (ADT), and implementations of a stack data structure, including code examples in C++ for stack implementation using an array and a linked list.
 
-````markdown
 ### Stack Data Structure
 
 A stack is a fundamental data structure that follows the Last-In, First-Out (LIFO) principle. In a stack, the most recently added item is the first one to be removed. It is a versatile data structure used in various computer science applications.
@@ -1044,12 +1041,14 @@ int main() {
     return 0;
 }
 ```
-````
+
+---
 
 ### Implementation of Stack Using Linked List
 
 For a detailed implementation of a stack using a linked list, you can refer to the following resource:
-[Stack Implementation Using Linked List](https://www.udemy.com/course/datastructurescncpp/learn/lecture/13145332#notes)
+
+### [Stack Implementation Using Linked List](https://www.udemy.com/course/datastructurescncpp/learn/lecture/13145332#notes)
 
 This resource provides a step-by-step explanation and code examples for implementing a stack using a linked list.
 

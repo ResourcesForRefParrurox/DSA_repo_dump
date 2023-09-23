@@ -736,9 +736,449 @@ To insert a node at any position (e.g., 4th position) in a doubly linked list, f
 
 ---
 
-### Stack
+### Deleting Doubly Linked List
 
-Placeholder for documentation on stacks.
+Deleting a node from a doubly linked list involves adjusting the pointers correctly to remove the desired node. This can be done for the first node or any given node within the list.
+
+#### Deleting the First Node
+
+To delete the first node in a doubly linked list, follow these steps:
+
+1. Take a pointer `p` and set it to the first node.
+2. Move the `first` pointer to the next node.
+3. Retrieve the value of `p` (which is the data of the first node).
+4. Delete the node pointed to by `p`.
+5. Set `first->prev` to `NULL` to disconnect it from the previous node (if any).
+
+**Code:**
+
+```cpp
+p = first;
+first = first->next;
+x = p->data;
+delete p;
+if (first)
+    first->prev = NULL;
+```
+
+#### Deleting from a Given Node
+
+To delete a node from a specific position (e.g., the 4th node) in a doubly linked list, follow these steps:
+
+1. Bring a pointer `p` from the `first` pointer to the 4th node.
+2. Update the `next` pointer of `p->prev` to point to `p->next`.
+3. Update the `prev` pointer of `p->next` to point to `p->prev`.
+4. Retrieve the data from node `p` into a variable `x`.
+5. Delete the node `p`.
+
+**Code:**
+
+```cpp
+p = first;
+for (i = 0; i < pos - 1; i++)
+    p = p->next;
+p->prev->next = p->next;
+if (p->next)
+    p->next->prev = p->prev;
+x = p->data;
+delete p;
+```
+
+This deletion operation takes constant time O(1) in the best and average cases and linear time O(n) in the worst case.
+
+---
+
+### Reversing a Doubly Linked List
+
+Reversing a doubly linked list changes the order of nodes, making the last node the new first node and vice versa.
+
+To reverse a doubly linked list, follow these steps:
+
+1. Take a pointer `p` and set it to `first`.
+2. For each node in the list:
+   - Swap the `prev` and `next` pointers of the current node `p`.
+   - Move `p` to its previous node.
+
+**Code:**
+
+```cpp
+p = first;
+while (p) {
+    temp = p->next;
+    p->next = p->prev;
+    p->prev = temp;
+    p = p->prev;
+
+    if (!p->next)
+        first = p;
+}
+```
+
+---
+
+### Circular Doubly Linked List
+
+A circular doubly linked list is a data structure where the last node's `next` pointer points to the first node, creating a loop. This structure allows bidirectional traversal and constant-time insertions before the head node.
+
+#### Code Example
+
+Here's a C++ code example demonstrating the creation, display, and deletion of nodes in a circular doubly linked list.
+
+```cpp
+#include <iostream>
+
+// Node structure
+struct Node {
+    int data;
+    Node* next;
+    Node* prev;
+};
+
+// Display the circular doubly linked list
+void display(Node* head) {
+    if (!head) return;
+    Node* current = head;
+    do {
+        std::cout << current->data << " ";
+        current = current->next;
+    } while (current != head);
+    std::cout << std::endl;
+}
+
+// Insert a new node after a given node
+void insert_after(Node* prev_node, int data_to_insert) {
+    if (!prev_node) return;
+    Node* new_node = new Node;
+    new_node->data = data_to_insert;
+    new_node->next = prev_node->next;
+    prev_node->next = new_node;
+    new_node->prev = prev_node;
+    new_node->next->prev = new_node;
+}
+
+// Insert a new node before the head node (constant time)
+Node* insert_before_head(Node* head, int data_to_insert) {
+    Node* new_node = new Node;
+    new_node->data = data_to_insert;
+    if (!head) {
+        new_node->next = new_node;
+        new_node->prev = new_node;
+        return new_node;
+    }
+    Node* last_node = head->prev;
+    new_node->next = head;
+    new_node->prev = last_node;
+    head->prev = new_node;
+    last_node->next = new_node;
+    return new_node; // Return new head if needed
+}
+
+// Delete a node (constant time)
+void delete_node(Node* node_to_delete) {
+    if (!node_to_delete) return;
+    node_to_delete->prev->next = node_to_delete->next;
+    node_to_delete->next->prev = node_to_delete->prev;
+    delete node_to_delete;
+}
+
+int main() {
+    Node* head = nullptr; // Initialize an empty list
+
+    // Insert nodes
+    head = insert_before_head(head, 3); // Insert before head
+
+
+    insert_after(head, 5);
+    insert_after(head->next, 7);
+
+    // Display the list
+    display(head); // Output: 3 5 7
+
+    // Delete a node
+    delete_node(head->next);
+    display(head); // Output: 3 7
+
+    return 0;
+}
+```
+
+---
+
+### Polynomial Representation with Doubly Linked List
+
+Polynomials can be represented using a doubly linked list, with each node storing the coefficient and exponent of a term. Here's a C++ code example for creating, displaying, and evaluating polynomials using a doubly linked list.
+
+#### Code Example
+
+```cpp
+#include <iostream>
+#include <cmath>
+
+class Node {
+public:
+    int coeff;
+    int exp;
+    Node* next;
+
+    Node(int c, int e) : coeff(c), exp(e), next(nullptr) {}
+};
+
+class Polynomial {
+private:
+    Node* poly;
+
+public:
+    Polynomial() : poly(nullptr) {}
+
+    void create() {
+        Node* t = nullptr;
+        Node* last = nullptr;
+        int num, coeff, exp;
+
+        std::cout << "Enter number of terms: ";
+        std::cin >> num;
+        std::cout << "Enter each term with coeff and exp:" << std::endl;
+
+        for (int i = 0; i < num; i++) {
+            std::cin >> coeff >> exp;
+            t = new Node(coeff, exp);
+            t->next = nullptr;
+
+            if (!poly) {
+                poly = last = t;
+            } else {
+                last->next = t;
+                last = t;
+            }
+        }
+    }
+
+    void display() {
+        Node* p = poly;
+
+        while (p) {
+            std::cout << p->coeff << "x^" << p->exp;
+            if (p->next) {
+                std::cout << " + ";
+            }
+            p = p->next;
+        }
+        std::cout << std::endl;
+    }
+
+    long evaluate(int x) {
+        long val = 0;
+        Node* p = poly;
+
+        while (p) {
+            val += p->coeff * std::pow(x, p->exp);
+            p = p->next;
+        }
+
+        return val;
+    }
+};
+
+int main() {
+    Polynomial poly;
+    poly.create();
+    poly.display();
+    std::cout << poly.evaluate(1) << std::endl;
+
+    return 0;
+}
+```
+
+This code defines a `Polynomial` class that uses a doubly linked list to represent and work with polynomial expressions.
+
+---
+
+## Stack
+
+Certainly! Below is a Markdown document explaining the principles, abstract data type (ADT), and implementations of a stack data structure, including code examples in C++ for stack implementation using an array and a linked list.
+
+````markdown
+### Stack Data Structure
+
+A stack is a fundamental data structure that follows the Last-In, First-Out (LIFO) principle. In a stack, the most recently added item is the first one to be removed. It is a versatile data structure used in various computer science applications.
+
+#### Abstract Data Type (ADT) Stack
+
+An ADT stack consists of the following components:
+
+- **Space**: A space for storing elements.
+- **Top Pointer**: A pointer that points to the topmost element of the stack.
+
+#### Operations
+
+The stack supports the following operations:
+
+- `push()`: Adds an element to the top of the stack.
+- `pop()`: Removes and returns the top element from the stack.
+- `peek(index)`: Retrieves the element at a specific index from the top of the stack.
+- `stackTop()`: Returns the topmost element without removing it.
+- `isEmpty()`: Checks if the stack is empty.
+- `isFull()`: Checks if the stack is full (for array-based implementations).
+
+### Implementation of Stack Using Array
+
+#### Code Example
+
+```cpp
+struct Stack {
+    int size;
+    int top;
+    int* s;
+};
+
+int main() {
+    struct Stack st;
+    cout << "Enter the size of the stack: ";
+    cin >> st.size;
+    st.s = new int[st.size];
+    st.top = -1;
+
+    // Perform stack operations here
+
+    delete[] st.s; // Don't forget to free the memory
+    return 0;
+}
+```
+````
+
+### Implementation of Stack Using Linked List
+
+For a detailed implementation of a stack using a linked list, you can refer to the following resource:
+[Stack Implementation Using Linked List](https://www.udemy.com/course/datastructurescncpp/learn/lecture/13145332#notes)
+
+This resource provides a step-by-step explanation and code examples for implementing a stack using a linked list.
+
+---
+
+### Parenthesis Matching using Stack
+
+In this example, we will implement parenthesis matching using a stack data structure. We will explore two approaches: one using a custom stack implementation and another using the C++ standard library stack.
+
+#### Custom Stack Implementation
+
+We'll start with a custom stack implementation in C++ to check for balanced parentheses in an expression.
+
+### Stack Class
+
+We create a `Stack` class with the following methods:
+
+- `push(char x)`: Pushes a character onto the stack.
+- `pop()`: Pops and returns the top character from the stack.
+- `peek(int index)`: Retrieves the character at a specific index from the top of the stack.
+- `isFull()`: Checks if the stack is full.
+- `isEmpty()`: Checks if the stack is empty.
+- `display()`: Displays the elements of the stack.
+- `stackTop()`: Returns the top character without removing it.
+
+```cpp
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+class Stack {
+private:
+    int size;
+    int top;
+    char* S;
+public:
+    Stack(int size);
+    ~Stack();
+    void push(char x);
+    char pop();
+    char peek(int index);
+    int isFull();
+    int isEmpty();
+    void display();
+    char stackTop();
+};
+
+// Implementation of methods
+// ...
+
+int main() {
+    // Testing the isBalanced function
+    char E[] = "((a+b)*(c-d))";
+    cout << isBalanced(E) << endl;
+
+    char F[] = "((a+b)*(c-d)))";
+    cout << isBalanced(F) << endl;
+
+    char G[] = "(((a+b)*(c-d))";
+    cout << isBalanced(G) << endl;
+    return 0;
+}
+```
+
+### isBalanced Function
+
+The `isBalanced` function uses the custom stack to check if an expression has balanced parentheses. It scans the input expression and pushes '(' onto the stack when '(' is encountered. When ')', it pops '(' from the stack if available. If the stack is empty when encountering ')', the expression is unbalanced.
+
+### Output
+
+The output of the `isBalanced` function indicates whether the given expressions have balanced parentheses.
+
+### Extended Problem
+
+We can also solve the problem using the C++ standard library stack and a mapping of closing and opening parentheses. This approach offers a more concise solution.
+
+```cpp
+#include <iostream>
+#include <cstring>
+#include <stack>
+#include <map>
+
+using namespace std;
+
+int isBalanced(char* exp) {
+    // Create a map to store closing and opening parentheses pairs
+    map<char, char> mapping;
+    mapping['}'] = '{';
+    mapping[')'] = '(';
+    mapping[']'] = '[';
+
+    // Create a stack using the C++ standard library
+    stack<char> stk;
+
+    for (int i = 0; i < strlen(exp); i++) {
+        if (exp[i] == '{' || exp[i] == '[' || exp[i] == '(') {
+            stk.push(exp[i]);
+        } else if (exp[i] == '}' || exp[i] == ']' || exp[i] == ')') {
+            if (stk.empty()) {
+                return false;
+            } else {
+                char temp = stk.top();
+                // Check if the current character closes the corresponding opening parenthesis
+                if (temp == mapping[exp[i]]) {
+                    stk.pop();
+                } else {
+                    return false;
+                }
+            }
+        }
+    }
+    return stk.empty() ? true : false;
+}
+
+int main() {
+    char A[] = "{([a+b]*[c-d])/e}";
+    cout << isBalanced(A) << endl;
+
+    char B[] = "{([a+b]}*[c-d])/e}";
+    cout << isBalanced(B) << endl;
+
+    char C[] = "{([{a+b]*[c-d])/e}";
+    cout << isBalanced(C) << endl;
+
+    return 0;
+}
+```
+
+---
 
 ### Queue
 

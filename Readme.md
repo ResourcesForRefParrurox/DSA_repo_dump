@@ -993,8 +993,6 @@ int main() {
 
 ## Stack
 
-Certainly! Below is a Markdown document explaining the principles, abstract data type (ADT), and implementations of a stack data structure, including code examples in C++ for stack implementation using an array and a linked list.
-
 ### Stack Data Structure
 
 A stack is a fundamental data structure that follows the Last-In, First-Out (LIFO) principle. In a stack, the most recently added item is the first one to be removed. It is a versatile data structure used in various computer science applications.
@@ -1179,23 +1177,766 @@ int main() {
 
 ---
 
-### Queue
+### infix to post fix
 
-Placeholder for documentation on queues.
+![infixToPosfix](image-3.png)
 
-### Tree
+Certainly! Here are your instructions in proper bullet points:
+
+- Take a stack.
+- Generate a postfix expression.
+- Take one symbol at a time.
+- Scan through the list.
+- If it's an operand, send it to postfix.
+- If it's an operator (+, -, /, \*), then check its precedence before pushing it to the stack.
+- Continue, and if an operator comes whose precedence is less than or equal to the already top operator in the stack, then pop the operator in the stack and send it to postfix.
+- At the end, whatever is in the stack, pop out and send it to the postfix as it is.
+
+![infixtopostfixTable](image-2.png)
+
+#### [Method 2](https://www.udemy.com/course/datastructurescncpp/learn/lecture/13167944#notes)
+
+_CODE:_
+
+```c++
+int isOperand(char x)
+{
+    if(x=='+' || x=='-' || x=='*' || x == '/')
+         return 0;
+    else
+         return 1;
+}
+
+int pre(char x){
+    if(x=='+' || x=='-')
+        return 1;
+    else if(x=='*' || x == '/')
+        return 2;
+    return 0;
+}
+
+char* convert(char *infix)
+{
+    struct stack st; // assume it's initialised
+    char *postfix = new char[strlen(infix)+1];
+    int i=0, j=0;
+    while (infix[i]!='\0'){
+        if(isOperand(infix[i]))
+            postfix[j++]=infix[i++];
+        else{
+
+            if(pre(infix[i])>pre(stackTop(st)))
+                push(&st,infix[i++]);
+            else
+                postfix[j++]=pop(&st);
+        }
+    }
+
+    while(!isEmpty(st)){
+        postfix[j++]=pop(&st);
+    }
+    postfix[j]='\0';
+    return postfix;
+}
+
+```
+
+### Infix to Postfix with Associativity and Parenthesis
+
+![infixToPostfixUsingSTLstack.cpp](./infixToPostfixUsingSTLstack.cpp)
+
+![Video link](https://www.udemy.com/course/datastructurescncpp/learn/lecture/13167974#content)
+
+---
+
+# Queue
+
+A Queue is a linear data structure that follows the First-In-First-Out (FIFO) principle. It is a collection of elements in which an element is inserted at the rear end and removed from the front end. Queues can be implemented using two different data structures: arrays and linked lists.
+
+### Queue Abstract Data Type (ADT)
+
+The Queue ADT defines the following characteristics:
+
+- **Space for Storing Elements:** A queue must have space allocated for storing its elements.
+
+- **Insertion is Done at the Rear End:** New elements are added to the rear end of the queue.
+
+- **Deletion is Done at the Front End:** Elements are removed from the front end of the queue.
+
+### Operations
+
+A queue supports the following operations:
+
+1. **enqueue(x):** Adds an element 'x' to the rear end of the queue.
+
+2. **dequeue():** Removes and returns the element at the front end of the queue.
+
+3. **isEmpty():** Checks whether the queue is empty and returns a boolean value (true if empty, false otherwise).
+
+4. **isFull():** Checks whether the queue is full (for an array-based implementation) and returns a boolean value (true if full, false otherwise).
+
+5. **first():** Returns the element at the front end of the queue without removing it.
+
+6. **last():** Returns the element at the rear end of the queue without removing it.
+
+Queues are commonly used in various applications, such as task scheduling, breadth-first search algorithms, and managing tasks in a printer queue.
+
+#### Implementation Options
+
+As mentioned earlier, queues can be implemented using two primary data structures:
+
+- **Array-based Queue:** In this implementation, the queue is backed by an array, and the front and rear ends of the queue are tracked using indices. This approach is efficient in terms of space but may have limitations on the maximum number of elements it can hold (bounded by the size of the array).
+
+### ![Video](https://www.udemy.com/course/datastructurescncpp/learn/lecture/13168168#notes)
+
+_full code_
+
+```c++
+
+
+
+
+#include <iostream>
+
+using namespace std;
+
+class Queue{
+private:
+    int size;
+    int front;
+    int rear;
+    int* Q;
+public:
+    Queue(int size);
+    ~Queue();
+    bool isFull();
+    bool isEmpty();
+    void enqueue(int x);
+    int dequeue();
+    void display();
+};
+
+Queue::Queue(int size) {
+    this->size = size;
+    front = -1;
+    rear = -1;
+    Q = new int [size];
+}
+
+Queue::~Queue() {
+    delete [] Q;
+}
+
+bool Queue::isEmpty() {
+    if (front == rear){
+        return true;
+    }
+    return false;
+}
+
+bool Queue::isFull() {
+    if (rear == size-1){
+        return true;
+    }
+    return false;
+}
+
+void Queue::enqueue(int x) {
+    if (isFull()){
+        cout << "Queue Overflow" << endl;
+    } else {
+        rear++;
+        Q[rear] = x;
+    }
+}
+
+int Queue::dequeue() {
+    int x = -1;
+    if (isEmpty()){
+        cout << "Queue Underflow" << endl;
+    } else {
+        front++;
+        x = Q[front];
+    }
+    return x;
+}
+
+void Queue::display() {
+    for (int i=front+1; i<=rear; i++){
+        cout << Q[i] << flush;
+        if (i < rear){
+            cout << " <- " << flush;
+        }
+    }
+    cout << endl;
+}
+
+int main() {
+
+    int A[] = {1, 3, 5, 7, 9};
+
+    Queue q(sizeof(A)/sizeof(A[0]));
+
+    // Enqueue
+    for (int i=0; i<sizeof(A)/sizeof(A[0]); i++){
+        q.enqueue(A[i]);
+    }
+
+    // Display
+    q.display();
+
+    // Overflow
+    q.enqueue(10);
+
+    // Dequeue
+    for (int i=0; i<sizeof(A)/sizeof(A[0]); i++){
+        q.dequeue();
+    }
+
+    // Underflow
+    q.dequeue();
+
+    return 0;
+}
+
+```
+
+Here is the explanation for the code above:
+
+1. **Constructor Initialization:** In the constructor, we initialize the `front` and `rear` pointers to `-1`, indicating that the queue is initially empty.
+
+2. **`isEmpty()` Function:** The `isEmpty()` function returns `true` or `false` based on whether the queue is empty or not. It checks if the `front` and `rear` pointers are at the same position.
+
+3. **`isFull()` Function:** The `isFull()` function returns `true` or `false` depending on whether the queue is full or not. It checks if the `rear` pointer is at the last position of the queue.
+
+4. **`enqueue()` Function:** The `enqueue()` function inserts an element at the rear position of the queue. It first checks if the queue is full. If the queue is full, it displays the message "Queue Overflow." If the queue is not full, it increments the `rear` pointer and inserts the element at the rear position of the queue.
+
+5. **`dequeue()` Function:** The `dequeue()` function deletes an element from the front position of the queue. It first checks if the queue is empty. If the queue is empty, it displays the message "Queue Underflow." If the queue is not empty, it increments the `front` pointer and returns the element that was deleted from the front position of the queue.
+
+6. **`display()` Function:** The `display()` function displays the elements of the queue. It starts traversing the queue from the `front` position and continues until the `rear` position, displaying all the elements in the queue.
+
+#### Drawbacks of queue using array
+
+- we can't reuse the spaces of deleted elements
+- every location can be used once we can't reuse them
+- queue is both empty and full at the same time
+
+#### ![Drawbacks](https://www.udemy.com/course/datastructurescncpp/learn/lecture/13168192#content)
+
+---
+
+- **Linked List-based Queue:** Here, the queue is implemented using a linked list data structure. This approach is dynamic in nature and can grow as needed, but it may consume more memory due to the additional pointers associated with each element.
+
+Both implementations have their advantages and trade-offs, and the choice of implementation depends on the specific requirements of the application.
+
+Queues are an essential data structure in computer science and are widely used in various algorithms and applications where maintaining order and processing elements in a specific sequence is important.
+
+### ![Video](https://www.udemy.com/course/datastructurescncpp/learn/lecture/13168226#content)
+
+```c++
+
+#include <iostream>
+
+using namespace std;
+
+// Define a Node class to represent elements in the queue.
+class Node {
+public:
+    int data;       // Data stored in the node.
+    Node* next;     // Pointer to the next node.
+};
+
+// Define a Queue class to implement a queue using linked list.
+class Queue {
+private:
+    Node* front;    // Pointer to the front of the queue.
+    Node* rear;     // Pointer to the rear of the queue.
+public:
+    Queue();        // Constructor to initialize the queue.
+    ~Queue();       // Destructor to free memory when the queue is destroyed.
+    void enqueue(int x);    // Method to add an element to the rear of the queue.
+    int dequeue();          // Method to remove and return an element from the front of the queue.
+    bool isEmpty();         // Method to check if the queue is empty.
+    void display();         // Method to display the elements in the queue.
+};
+
+// Constructor for the Queue class.
+Queue::Queue() {
+    front = nullptr;
+    rear = nullptr;
+}
+
+// Method to add an element to the rear of the queue.
+void Queue::enqueue(int x) {
+    Node* t = new Node; // Create a new node.
+    if (t == nullptr) {
+        cout << "Queue Overflow" << endl; // If memory allocation fails, print an error message.
+    } else {
+        t->data = x;
+        t->next = nullptr;
+        if (front == nullptr) {
+            front = t;      // If the queue is empty, set both front and rear to the new node.
+            rear = t;
+        } else {
+            rear->next = t; // Otherwise, add the new node to the rear of the queue and update the rear pointer.
+            rear = t;
+        }
+    }
+}
+
+// Method to remove and return an element from the front of the queue.
+int Queue::dequeue() {
+    int x = -1;
+    Node* p;
+    if (isEmpty()) {
+        cout << "Queue Underflow" << endl; // If the queue is empty, print an error message.
+    } else {
+        p = front;
+        front = front->next;
+        x = p->data; // Get the data from the front node.
+        delete p;    // Delete the front node to free memory.
+    }
+    return x;
+}
+
+// Method to check if the queue is empty.
+bool Queue::isEmpty() {
+    if (front == nullptr) {
+        return true;
+    }
+    return false;
+}
+
+// Destructor for the Queue class.
+Queue::~Queue() {
+    Node* p = front;
+    while (front) {
+        front = front->next;
+        delete p; // Delete nodes one by one to free memory.
+        p = front;
+    }
+}
+
+// Method to display the elements in the queue.
+void Queue::display() {
+    Node* p = front;
+    while (p) {
+        cout << p->data << flush;
+        p = p->next;
+        if (p != nullptr) {
+            cout << " <- " << flush; // Print an arrow between elements.
+        }
+    }
+    cout << endl;
+}
+
+int main() {
+
+    int A[] = {1, 3, 5, 7, 9};
+
+    Queue q;
+
+    for (int i=0; i<sizeof(A)/sizeof(A[0]); i++){
+        q.enqueue(A[i]); // Enqueue elements from the array into the queue.
+    }
+
+    q.display(); // Display the elements in the queue.
+
+    for (int i=0; i<sizeof(A)/sizeof(A[0]); i++){
+        q.dequeue(); // Dequeue elements from the queue.
+    }
+    q.dequeue(); // Attempt to dequeue from an empty queue.
+
+    return 0;
+}
+
+
+
+```
+
+---
+
+## ![Circular-Queue](https://www.udemy.com/course/datastructurescncpp/learn/lecture/13168212#content)
+
+```cpp
+#include <iostream>
+
+using namespace std;
+
+// Define a CircularQueue class
+class CircularQueue {
+private:
+    int size;   // Maximum size of the circular queue
+    int front;  // Index of the front element
+    int rear;   // Index of the rear element
+    int* Q;     // Pointer to the array that holds the elements
+public:
+    // Constructor to initialize the circular queue with a given size
+    CircularQueue(int size);
+
+    // Destructor to free the memory allocated for the circular queue
+    ~CircularQueue();
+
+    // Check if the circular queue is full
+    bool isFull();
+
+    // Check if the circular queue is empty
+    bool isEmpty();
+
+    // Enqueue an element 'x' into the circular queue
+    void enqueue(int x);
+
+    // Dequeue an element from the circular queue and return it
+    int dequeue();
+
+    // Display the elements in the circular queue
+    void display();
+};
+
+// Constructor for the CircularQueue class
+CircularQueue::CircularQueue(int size) {
+    this->size = size;
+    front = 0;          // Initialize front and rear to 0
+    rear = 0;
+    Q = new int[size];  // Allocate memory for the circular queue
+}
+
+// Destructor for the CircularQueue class
+CircularQueue::~CircularQueue() {
+    delete[] Q;  // Free the memory allocated for the circular queue
+}
+
+// Check if the circular queue is empty
+bool CircularQueue::isEmpty() {
+    if (front == rear) {
+        return true;  // If front and rear are the same, the queue is empty
+    }
+    return false;
+}
+
+// Check if the circular queue is full
+bool CircularQueue::isFull() {
+    if ((rear + 1) % size == front) {
+        return true;  // If the next position after rear is the front, the queue is full
+    }
+    return false;
+}
+
+// Enqueue an element 'x' into the circular queue
+void CircularQueue::enqueue(int x) {
+    if (isFull()) {
+        cout << "Queue Overflow" << endl;  // Display an error message if the queue is full
+    } else {
+        rear = (rear + 1) % size;  // Move the rear to the next position in a circular manner
+        Q[rear] = x;              // Insert the element 'x' at the rear position
+    }
+}
+
+// Dequeue an element from the circular queue and return it
+int CircularQueue::dequeue() {
+    int x = -1;  // Initialize x to -1 (default return value)
+    if (isEmpty()) {
+        cout << "Queue Underflow" << endl;  // Display an error message if the queue is empty
+    } else {
+        front = (front + 1) % size;  // Move the front to the next position in a circular manner
+        x = Q[front];                // Retrieve the element at the front position
+    }
+    return x;
+}
+
+// Display the elements in the circular queue
+void CircularQueue::display() {
+    int i = front + 1;  // Start from the position after the front
+    do {
+        cout << Q[i] << flush;
+        if (i < rear) {
+            cout << " <- " << flush;  // Display an arrow between elements (if not at the rear)
+        }
+        i = (i + 1) % size;  // Move to the next position in a circular manner
+    } while (i != (rear + 1) % size);  // Continue until we reach the position after the rear
+}
+
+int main() {
+    int A[] = {1, 3, 5, 7, 9};
+
+    // Create a CircularQueue with a size of (sizeof(A)/sizeof(A[0]) + 1)
+    CircularQueue cq(sizeof(A) / sizeof(A[0]) + 1);
+
+    // Enqueue elements from the array into the circular queue
+    for (int i = 0; i < sizeof(A) / sizeof(A[0]); i++) {
+        cq.enqueue(A[i]);
+    }
+
+    // Display the elements in the circular queue
+    cq.display();
+    cout << endl;
+
+    // Attempt to enqueue when the circular queue is full (Overflow)
+    cq.enqueue(10);
+
+    // Dequeue elements from the circular queue
+    for (int i = 0; i < sizeof(A) / sizeof(A[0]); i++) {
+        cq.dequeue();
+    }
+
+    // Attempt to dequeue when the circular queue is empty (Underflow)
+    cq.dequeue();
+
+    return 0;
+}
+
+
+
+```
+
+---
+
+## ![Queue using single pointer](https://www.udemy.com/course/datastructurescncpp/learn/lecture/13168156#notes)
+
+_time complexity for insertion: O(1)_
+_time complexity for deletion: O(n)_
+
+## ![Queue using two pointer](https://www.udemy.com/course/datastructurescncpp/learn/lecture/13168164#notes)
+
+_time complexity for insertion: O(1) (enqueue)_
+_time complexity for deletion: O(1) (dequeue)_
+
+**when front and rear are pointing at same (they are equal) then queue is empty**
+
+---
+
+### double ended queue : DEqueue ⚠️ ( not dequeue)
+
+## ![DEqueue video](https://www.udemy.com/course/datastructurescncpp/learn/lecture/13168232#content)
+
+Here are the key points and notes from the provided explanation about DEQueue (Double Ended Queue):
+
+1. **DEQueue**:
+
+   - DEQueue is read as "DEQueue," not "dequeue."
+   - It stands for Double Ended Queue.
+   - Unlike a regular queue, DEQueue doesn't strictly follow the First-In-First-Out (FIFO) principle.
+
+2. **Implementation**:
+
+   - DEQueue can be implemented using either an array or a linked list.
+
+3. **Front and Rear Pointers**:
+
+   - In both array and linked list implementations, DEQueue requires two pointers: front and rear.
+   - In a regular queue, front is used for deletion, and rear is used for insertion.
+   - In DEQueue, both front and rear can be used for both insertion and deletion operations.
+
+4. **DEQueue Operations**:
+
+   - Using the rear pointer, you can insert elements from the rear end.
+   - Using the rear pointer, you can also delete elements from the rear end.
+   - Using the front pointer, you can insert elements from the front end.
+   - Using the front pointer, you can also delete elements from the front end.
+
+5. **Non-Strict FIFO**:
+
+   - DEQueue does not strictly adhere to the FIFO principle. Elements can be inserted and deleted from both ends, which may result in non-FIFO behavior.
+
+6. **Java Support**:
+
+   - Java supports a data structure similar to DEQueue, allowing insertion and deletion from both ends.
+
+7. **Variations**:
+
+   - There are variations of DEQueue:
+     - **Input Restricted DEQueue:** In this variant, insertion (input) is restricted to the rear end, but deletion can be done from both ends.
+     - **Output Restricted DEQueue:** In this variant, deletion (output) is restricted to the front end, but insertion can be done from both ends.
+
+8. **Programming Exercise**:
+   - Implementing a DEQueue involves writing four main operations: insert from the front, delete from the front, insert from the rear, and delete from the rear.
+   - This exercise is commonly used for students to practice and understand DEQueue implementations using arrays or linked lists.
+
+Overall, DEQueue is a versatile data structure that allows flexibility in inserting and deleting elements from both ends, making it suitable for various applications that do not require strict FIFO ordering. It also offers variations with input or output restrictions for more specialized use cases.
+
+---
+
+#### Priority queue:
+
+### ![video](https://www.udemy.com/course/datastructurescncpp/learn/lecture/13168238#notes)
+
+```c++
+
+// Include necessary libraries
+#include <iostream> // Input and output operations
+#include <queue>    // For using the priority_queue container
+using namespace std; // Namespace for standard C++ components
+
+// Main function
+int main()
+{
+    // Declare an integer array containing 6 elements
+    int arr[6] = { 10, 2, 4, 8, 6, 9 };
+
+    // Define a priority queue of integers
+    priority_queue<int> pq;
+
+    // Print the original array
+    cout << "Array: ";
+    for (auto i : arr) {
+        cout << i << ' ';
+    }
+    cout << endl;
+
+    // Push each element from the array into the priority queue
+    for (int i = 0; i < 6; i++) {
+        pq.push(arr[i]);
+    }
+
+    // Print the elements from the priority queue
+    cout << "Priority Queue: ";
+    while (!pq.empty()) {
+        cout << pq.top() << ' '; // Access the highest-priority element (maximum value)
+        pq.pop(); // Remove the highest-priority element
+    }
+
+    return 0;
+}
+
+```
+
+### ![Queue using 2 stacks 📍📍](https://www.udemy.com/course/datastructurescncpp/learn/lecture/13168242#notes)
+
+```c++
+
+
+// CPP program to implement Queue using
+// two stacks with costly deQueue()
+#include <bits/stdc++.h>
+using namespace std;
+
+struct Queue {
+	stack<int> s1, s2;
+
+	// Enqueue an item to the queue
+	void enQueue(int x)
+	{
+		// Push item into the first stack
+		s1.push(x);
+	}
+
+	// Dequeue an item from the queue
+	int deQueue()
+	{
+		// if both stacks are empty
+		if (s1.empty() && s2.empty()) {
+			return -1;
+		}
+
+		// if s2 is empty, move
+		// elements from s1
+		if (s2.empty()) {
+			while (!s1.empty()) {
+				s2.push(s1.top());
+				s1.pop();
+			}
+		}
+
+		// return the top item from s2
+		int x = s2.top();
+		s2.pop();
+		return x;
+	}
+};
+
+// Driver code
+int main()
+{
+	Queue q;
+
+	cout << q.deQueue() << '\n';
+	q.enQueue(1);
+	cout << q.deQueue() << '\n';
+
+	return 0;
+}
+
+
+```
+
+#### -Enqueue:
+
+```c++
+// CPP program to implement Queue using
+// two stacks with costly enQueue()
+#include <bits/stdc++.h>
+using namespace std;
+
+struct Queue {
+	stack<int> s1, s2;
+
+	void enQueue(int x)
+	{
+		// Move all elements from s1 to s2
+		while (!s1.empty()) {
+			s2.push(s1.top());
+			s1.pop();
+		}
+
+		// Push item into s1
+		s1.push(x);
+
+		// Push everything back to s1
+		while (!s2.empty()) {
+			s1.push(s2.top());
+			s2.pop();
+		}
+	}
+
+	// Dequeue an item from the queue
+	int deQueue()
+	{
+		// if first stack is empty
+		if (s1.empty()) {
+			return -1;
+		}
+
+		// Return top of s1
+		int x = s1.top();
+		s1.pop();
+		return x;
+	}
+};
+
+// Driver code
+int main()
+{
+	Queue q;
+	q.enQueue(1);
+	q.enQueue(2);
+	q.enQueue(3);
+
+	cout << q.deQueue() << '\n';
+	cout << q.deQueue() << '\n';
+	cout << q.deQueue() << '\n';
+
+	return 0;
+}
+
+
+
+```
+
+---
+
+# Tree
 
 Placeholder for documentation on trees.
 
-### Graph
+# Graph
 
 Placeholder for documentation on graphs.
 
-### Hash Table
+# Hash Table
 
 Placeholder for documentation on hash tables.
 
-### Heap
+# Heap
 
 Placeholder for documentation on heaps.
 
@@ -1205,27 +1946,142 @@ Placeholder for other data structures not listed above.
 
 ## Algorithms
 
-### Sorting Algorithms
+Certainly! Let's elaborate on each of these algorithmic techniques and provide example problems for each:
+
+### 1. Recursion and Backtracking
+
+**Elaboration:**
+Recursion is a technique where a function calls itself to solve a smaller instance of the same problem. It's often used for problems that can be broken down into smaller, similar subproblems. Backtracking is a specific form of recursion where the algorithm tries out different solutions and "backtracks" when it reaches an invalid solution.
+
+**Example Problem:**
+Problem: Calculate the factorial of a number using recursion.
+
+```cpp
+int factorial(int n) {
+    if (n == 0 || n == 1) {
+        return 1;
+    } else {
+        return n * factorial(n - 1);
+    }
+}
+```
+
+### 2. Greedy Algorithms
+
+**Elaboration:**
+Greedy algorithms make a series of choices to construct a solution step by step. At each step, they choose the best available option without considering the global picture. Greedy algorithms are often used for optimization problems.
+
+**Example Problem:**
+Problem: The coin change problem - Find the minimum number of coins needed to make a certain amount of change.
+
+```cpp
+int coinChange(int coins[], int n, int amount) {
+    sort(coins, coins + n, greater<int>());
+    int count = 0;
+    for (int i = 0; i < n; i++) {
+        while (amount >= coins[i]) {
+            amount -= coins[i];
+            count++;
+        }
+    }
+    return count;
+}
+```
+
+### 3. Sliding Window Technique
+
+**Elaboration:**
+The sliding window technique is used for efficiently processing arrays or lists by maintaining a "window" of elements and sliding it over the data to perform a specific operation. It's commonly used for subarray or substring-related problems.
+
+**Example Problem:**
+Problem: Find the maximum sum of a subarray of fixed size K.
+
+```cpp
+int maxSubarraySum(int arr[], int n, int k) {
+    int maxSum = 0;
+    int windowSum = 0;
+    for (int i = 0; i < k; i++) {
+        windowSum += arr[i];
+    }
+    maxSum = windowSum;
+    for (int i = k; i < n; i++) {
+        windowSum += arr[i] - arr[i - k];
+        maxSum = max(maxSum, windowSum);
+    }
+    return maxSum;
+}
+```
+
+### 4. Two-Pointer Technique
+
+**Elaboration:**
+The two-pointer technique involves using two pointers to traverse an array or list. It's particularly useful for problems involving searching, sorting, or finding pairs of elements that meet specific conditions.
+
+**Example Problem:**
+Problem: Determine if there exist two elements in a sorted array that sum up to a given target.
+
+```cpp
+bool hasPairWithSum(int arr[], int n, int target) {
+    int left = 0;
+    int right = n - 1;
+    while (left < right) {
+        int currentSum = arr[left] + arr[right];
+        if (currentSum == target) {
+            return true;
+        } else if (currentSum < target) {
+            left++;
+        } else {
+            right--;
+        }
+    }
+    return false;
+}
+```
+
+### 5. Divide and Conquer Strategies
+
+**Elaboration:**
+Divide and conquer is a recursive problem-solving approach that breaks a problem into smaller subproblems, solves them independently, and then combines their solutions to solve the original problem. It's often used for problems that can be divided into non-overlapping subproblems.
+
+**Example Problem:**
+Problem: Find the maximum subarray sum in a given array using a divide-and-conquer approach (Kadane's algorithm).
+
+```cpp
+int maxSubarraySum(int arr[], int left, int right) {
+    if (left == right) {
+        return arr[left];
+    }
+    int mid = (left + right) / 2;
+    int leftMax = maxSubarraySum(arr, left, mid);
+    int rightMax = maxSubarraySum(arr, mid + 1, right);
+    int crossingMax = maxCrossingSum(arr, left, mid, right);
+    return max(leftMax, max(rightMax, crossingMax));
+}
+```
+
+These algorithmic techniques are fundamental for solving a wide range of problems efficiently and effectively. They form the building blocks of algorithm design and are essential for tackling complex computational challenges.
+
+## Sorting Algorithms
 
 Placeholder for documentation on sorting algorithms.
 
-### Searching Algorithms
+## Searching Algorithms
 
 Placeholder for documentation on searching algorithms.
 
-### Dynamic Programming
+# Dynamic Programming
 
 Placeholder for documentation on dynamic programming.
 
-### Graph Algorithms
+## Graph Algorithms
 
 Placeholder for documentation on graph algorithms.
 
-### Greedy Algorithms
+## Greedy Algorithms
 
 Placeholder for documentation on greedy algorithms.
 
-### String Algorithms
+## String Algorithms
 
 Placeholder for documentation on string algorithms.
 

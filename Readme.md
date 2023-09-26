@@ -1243,9 +1243,9 @@ char* convert(char *infix)
 
 ### Infix to Postfix with Associativity and Parenthesis
 
-![infixToPostfixUsingSTLstack.cpp](./infixToPostfixUsingSTLstack.cpp)
+#### [infixToPostfixUsingSTLstack.cpp](./infixToPostfixUsingSTLstack.cpp)
 
-![Video link](https://www.udemy.com/course/datastructurescncpp/learn/lecture/13167974#content)
+#### [Video link](https://www.udemy.com/course/datastructurescncpp/learn/lecture/13167974#content)
 
 ---
 

@@ -1179,7 +1179,7 @@ int main() {
 
 ### infix to post fix
 
-![infixToPosfix](image-3.png)
+[infixToPosfix](image-3.png)
 
 Certainly! Here are your instructions in proper bullet points:
 
@@ -1192,7 +1192,7 @@ Certainly! Here are your instructions in proper bullet points:
 - Continue, and if an operator comes whose precedence is less than or equal to the already top operator in the stack, then pop the operator in the stack and send it to postfix.
 - At the end, whatever is in the stack, pop out and send it to the postfix as it is.
 
-![infixtopostfixTable](image-2.png)
+[infixtopostfixTable](image-2.png)
 
 #### [Method 2](https://www.udemy.com/course/datastructurescncpp/learn/lecture/13167944#notes)
 
@@ -1287,7 +1287,7 @@ As mentioned earlier, queues can be implemented using two primary data structure
 
 - **Array-based Queue:** In this implementation, the queue is backed by an array, and the front and rear ends of the queue are tracked using indices. This approach is efficient in terms of space but may have limitations on the maximum number of elements it can hold (bounded by the size of the array).
 
-### ![Video](https://www.udemy.com/course/datastructurescncpp/learn/lecture/13168168#notes)
+### [Video](https://www.udemy.com/course/datastructurescncpp/learn/lecture/13168168#notes)
 
 _full code_
 
@@ -1421,7 +1421,7 @@ Here is the explanation for the code above:
 - every location can be used once we can't reuse them
 - queue is both empty and full at the same time
 
-#### ![Drawbacks](https://www.udemy.com/course/datastructurescncpp/learn/lecture/13168192#content)
+### [Drawbacks](https://www.udemy.com/course/datastructurescncpp/learn/lecture/13168192#content)
 
 ---
 
@@ -1431,7 +1431,7 @@ Both implementations have their advantages and trade-offs, and the choice of imp
 
 Queues are an essential data structure in computer science and are widely used in various algorithms and applications where maintaining order and processing elements in a specific sequence is important.
 
-### ![Video](https://www.udemy.com/course/datastructurescncpp/learn/lecture/13168226#content)
+### [Video](https://www.udemy.com/course/datastructurescncpp/learn/lecture/13168226#content)
 
 ```c++
 
@@ -1556,7 +1556,7 @@ int main() {
 
 ---
 
-## ![Circular-Queue](https://www.udemy.com/course/datastructurescncpp/learn/lecture/13168212#content)
+### [Circular-Queue](https://www.udemy.com/course/datastructurescncpp/learn/lecture/13168212#content)
 
 ```cpp
 #include <iostream>
@@ -1691,12 +1691,12 @@ int main() {
 
 ---
 
-## ![Queue using single pointer](https://www.udemy.com/course/datastructurescncpp/learn/lecture/13168156#notes)
+## [Queue using single pointer](https://www.udemy.com/course/datastructurescncpp/learn/lecture/13168156#notes)
 
 _time complexity for insertion: O(1)_
 _time complexity for deletion: O(n)_
 
-## ![Queue using two pointer](https://www.udemy.com/course/datastructurescncpp/learn/lecture/13168164#notes)
+## [Queue using two pointer](https://www.udemy.com/course/datastructurescncpp/learn/lecture/13168164#notes)
 
 _time complexity for insertion: O(1) (enqueue)_
 _time complexity for deletion: O(1) (dequeue)_
@@ -1707,7 +1707,7 @@ _time complexity for deletion: O(1) (dequeue)_
 
 ### double ended queue : DEqueue ⚠️ ( not dequeue)
 
-## ![DEqueue video](https://www.udemy.com/course/datastructurescncpp/learn/lecture/13168232#content)
+### [DEqueue video](https://www.udemy.com/course/datastructurescncpp/learn/lecture/13168232#content)
 
 Here are the key points and notes from the provided explanation about DEQueue (Double Ended Queue):
 
@@ -1758,7 +1758,7 @@ Overall, DEQueue is a versatile data structure that allows flexibility in insert
 
 #### Priority queue:
 
-### ![video](https://www.udemy.com/course/datastructurescncpp/learn/lecture/13168238#notes)
+#### [video](https://www.udemy.com/course/datastructurescncpp/learn/lecture/13168238#notes)
 
 ```c++
 
@@ -1800,7 +1800,7 @@ int main()
 
 ```
 
-### ![Queue using 2 stacks 📍📍](https://www.udemy.com/course/datastructurescncpp/learn/lecture/13168242#notes)
+#### [Queue using 2 stacks 📍📍](https://www.udemy.com/course/datastructurescncpp/learn/lecture/13168242#notes)
 
 ```c++
 

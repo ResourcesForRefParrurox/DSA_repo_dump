@@ -1926,7 +1926,79 @@ int main()
 
 # Tree
 
-Placeholder for documentation on trees.
+-tree is a collection of nodes where one of the node is taken as root node and rest of the nodes are divided into disjoint subsets
+
+-each subset is a tree again (subtree)
+
+### [Trees](https://www.udemy.com/course/datastructurescncpp/learn/lecture/13168246#notes)
+
+![trees](image-4.png)
+
+Here are the notes in Markdown format based on the provided excerpt:
+
+- This section is about trees.
+
+  - General trees and binary trees are discussed.
+  - Various types of binary trees are covered.
+
+- Terminology of Trees:
+
+  - Tree is a collection of nodes or vertices and edges.
+    - If there are n nodes, there will be n - 1 edges.
+    - Root node does not have an edge from any parent.
+  - A tree has a root node, and the rest of the nodes are divided into disjoint subsets, each of which is a tree or subtree.
+
+- Tree Terminology:
+
+  - Root: The topmost node in the tree.
+  - Parent and Child: A node is a parent to its immediate descendants (children).
+  - Siblings: Nodes with the same parent.
+  - Descendants: All nodes reachable from a particular node.
+  - Ancestors: All nodes along the path from a node to the root.
+  - Degree of a Node: Number of direct children a node has.
+  - Degree of a Tree: The minimum degree of any node in the tree is 3 or more.
+
+- Internal Nodes and External Nodes:
+
+  - Internal nodes (non-leaf nodes) have a degree greater than zero.
+  - External nodes (leaf nodes) have a degree of zero.
+
+- Levels and Height:
+
+  - Level of a tree starts from 1 (root is level 1).
+  - Height starts from 0 (root is at height 0).
+  - Level counts nodes along the path, not all nodes.
+  - Height counts edges along the path.
+
+- Forest:
+
+  - A collection of trees is called a forest.
+  - Combining a forest into a single tree requires introducing a new root node.
+
+- Binary Trees:
+
+  - A binary tree is a tree of degree 2.
+  - Each node can have at most two children.
+  - Children are typically named as left child and right child.
+  - Every node can have 0, 1, or 2 children.
+
+- Examples of Binary Trees:
+
+  - Left skewed binary tree: Nodes have left children only.
+  - Right skewed binary tree: Nodes have right children only.
+  - Not a binary tree: If any node has more than two children, it's not binary.
+
+- Variations in Binary Tree Shapes:
+
+  - Binary trees can be drawn with left and right children or down and right children.
+
+---
+
+### number of trees:
+
+### [vid](https://www.udemy.com/course/datastructurescncpp/learn/lecture/13168256#notes)
+
+#### catalan no. ![no.of binary trees](image-5.png)
 
 # Graph
 

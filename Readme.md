@@ -1998,7 +1998,9 @@ Here are the notes in Markdown format based on the provided excerpt:
 
 ### [vid](https://www.udemy.com/course/datastructurescncpp/learn/lecture/13168256#notes)
 
-#### catalan no. ![no.of binary trees](image-5.png)
+#### catalan no.
+
+![no.of binary trees](image-5.png)
 
 # Graph
 

@@ -1932,8 +1932,6 @@ int main()
 
 ### [Trees](https://www.udemy.com/course/datastructurescncpp/learn/lecture/13168246#notes)
 
-![trees](image-4.png)
-
 Here are the notes in Markdown format based on the provided excerpt:
 
 - This section is about trees.
@@ -2000,7 +1998,59 @@ Here are the notes in Markdown format based on the provided excerpt:
 
 #### catalan no.
 
-![no.of binary trees](image-5.png)
+## _t(n)= 2nCn/(n + 1)_
+
+#### labelled
+
+![labelled](image-2.png)
+
+#### un-labelled
+
+![unlabelled](image-3.png)
+
+---
+
+### height VS nodes formulas
+
+### [video](https://www.udemy.com/course/datastructurescncpp/learn/lecture/13168262#notes)
+
+For Binary trees:
+If height is given
+min Nodes will be, n=h+1
+max nodes will be , n=2^(h+1) - 1
+
+if nodes are given
+
+min height , h=log2(n+1)-1
+
+mac height, h=n-1
+![Alt text](image-4.png)
+
+_relation with degree : deg(0)=deg(2) +1_
+
+#### Strict binary trees:
+
+[follow these vids](https://www.udemy.com/course/datastructurescncpp/learn/lecture/13209472#notes)
+
+- In strict binary trees, the number of internal nodes is one less than the number of external nodes.
+- Mathematically, this relationship can be expressed as: `external nodes (e) = internal nodes (i) + 1`.
+- This formula, `e = i + 1`, holds true for all strict binary trees.
+
+### n-Ary trees
+
+[these vids](https://www.udemy.com/course/datastructurescncpp/learn/lecture/13168308#notes)
+
+---
+
+### representation of binary trees
+
+[video](https://www.udemy.com/course/datastructurescncpp/learn/lecture/13168332#notes)
+
+-If any element is at index i, then left child is at (2 * i), and right child is at (2*i +1),
+
+- parent |i/2| (take the floor value)
+
+[linked rep](https://www.udemy.com/course/datastructurescncpp/learn/lecture/13168346#notes)
 
 # Graph
 
